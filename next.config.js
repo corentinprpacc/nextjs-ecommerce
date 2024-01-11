@@ -7,6 +7,16 @@ const withPWA = require("@ducanh2912/next-pwa").default({
   reloadOnOnline: true,
 })
 
-const nextConfig = {}
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "static.nike.com",
+        port: "",
+      },
+    ],
+  },
+}
 
 module.exports = withPWA(nextConfig)
