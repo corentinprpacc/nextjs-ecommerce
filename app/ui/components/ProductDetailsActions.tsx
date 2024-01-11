@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
-import { Product } from "@/lib/types"
+import { Product } from "@prisma/client"
 import { useShoppingCart } from "use-shopping-cart"
 
 export default function ProductDetailsActions({

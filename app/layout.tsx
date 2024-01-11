@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next"
 import "./globals.css"
 import { inter } from "./ui/fonts"
-import Navbar from "./ui/components/Navbar"
 import { Toaster } from "@/components/ui/toaster"
 import CartProvider from "./ui/components/Providers"
 
@@ -24,7 +23,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <CartProvider>
-          <Navbar />
           <main>{children}</main>
           <Toaster />
         </CartProvider>

@@ -1,6 +1,5 @@
 "use client"
 
-import { Product } from "@/lib/types"
 import Image from "next/image"
 import ShoppingCartButton from "./ShoppingCartButton"
 import { useToast } from "@/components/ui/use-toast"
@@ -14,6 +13,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import Link from "next/link"
+import { Product } from "@prisma/client"
 
 type Props = {
   product: Product

@@ -1,13 +1,16 @@
 import ProductDetailsActions from "@/app/ui/components/ProductDetailsActions"
-import { Button } from "@/components/ui/button"
-import { products } from "@/data/products"
-import { Product } from "@/lib/types"
+import { fetchProduct } from "@/lib/actions"
+import { Product } from "@prisma/client"
 import Image from "next/image"
 import { notFound } from "next/navigation"
 
-export default function ProductDetails({ params }: { params: { id: string } }) {
+export default async function ProductDetails({
+  params,
+}: {
+  params: { id: string }
+}) {
   const id: string = params.id
-  const product: Product | undefined = products.find((p) => p.id === id)
+  const product: Product | null = await fetchProduct(id)
   if (!product) {
     notFound()
   } else {

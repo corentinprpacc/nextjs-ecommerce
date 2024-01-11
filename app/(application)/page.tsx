@@ -1,8 +1,9 @@
-import { products } from "@/data/products"
-import Banner from "./ui/components/Banner"
-import ProductsCarousel from "./ui/components/ProductsCarousel"
+import Banner from "../ui/components/Banner"
+import ProductsCarousel from "../ui/components/ProductsCarousel"
+import { fetchProducts } from "@/lib/actions"
 
-export default function Home() {
+export default async function Home() {
+  const products = await fetchProducts()
   return (
     <section>
       <Banner />

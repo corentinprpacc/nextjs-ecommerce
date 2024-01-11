@@ -1,8 +1,8 @@
 "use client"
 
 import { Input } from "@/components/ui/input"
-import { products } from "@/data/products"
-import { Product } from "@/lib/types"
+import { fetchProducts } from "@/lib/actions"
+import { Product } from "@prisma/client"
 import { DeleteIcon } from "lucide-react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
@@ -13,12 +13,10 @@ export default function SearchBar() {
   const [productsSearch, setProductsSearch] = useState<Product[]>()
   const router = useRouter()
   const inputRef = useRef<any>(null)
-  const handleChange = useDebouncedCallback((term: string) => {
+  const handleChange = useDebouncedCallback(async (term: string) => {
     // Search For Nike Shoes
     if (term.length >= 3) {
-      const filteredProducts = products.filter(
-        (p) => p.name.includes(term) || p.category.includes(term),
-      )
+      const filteredProducts = await fetchProducts(null, term)
       setProductsSearch(filteredProducts)
     } else {
       setProductsSearch([])
@@ -51,36 +49,40 @@ export default function SearchBar() {
           />
         ) : null}
       </div>
-      <div className="absolute top-14 bg-white p-2 z-[100] w-full left-0">
-        <ul className="flex flex-col gap-2">
-          {productsSearch?.map((product) => {
-            return (
-              <li
-                key={product.id}
-                className="flex gap-4 hover:bg-gray-50 transition-all p-2 cursor-pointer"
-                onClick={(e) => handleClinkOnLink(e, product.id)}
-              >
-                <div className="image">
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    width={120}
-                    height={120}
-                  />
-                </div>
-                <div className="infos flex flex-col">
-                  <span className="text-lg font-semibold">{product.name}</span>
-                  <span className="text-sm text-gray-600 italic">
-                    Chaussures pour{" "}
-                    {product.category === "men" ? "Hommes" : "Femmes"}
-                  </span>
-                  <span className="font-bold">{product.price}€</span>
-                </div>
-              </li>
-            )
-          })}
-        </ul>
-      </div>
+      {productsSearch && productsSearch?.length > 0 ? (
+        <div className="absolute top-14 bg-white p-2 z-[100] w-full left-0">
+          <ul className="flex flex-col gap-2">
+            {productsSearch?.map((product) => {
+              return (
+                <li
+                  key={product.id}
+                  className="flex gap-4 hover:bg-gray-50 transition-all p-2 cursor-pointer"
+                  onClick={(e) => handleClinkOnLink(e, product.id)}
+                >
+                  <div className="image">
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      width={120}
+                      height={120}
+                    />
+                  </div>
+                  <div className="infos flex flex-col">
+                    <span className="text-lg font-semibold">
+                      {product.name}
+                    </span>
+                    <span className="text-sm text-gray-600 italic">
+                      Chaussures pour{" "}
+                      {product.category === "men" ? "Hommes" : "Femmes"}
+                    </span>
+                    <span className="font-bold">{product.price}€</span>
+                  </div>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      ) : null}
     </div>
   )
 }

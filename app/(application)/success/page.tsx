@@ -1,4 +1,4 @@
-import SucessContent from "../ui/components/SuccessContent"
+import SucessContent from "@/app/ui/components/SuccessContent"
 
 export default function success() {
   return (
